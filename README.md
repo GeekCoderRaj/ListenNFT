@@ -6,7 +6,7 @@ music artist can mint their work and showcase it to the world with any intervent
 Studios.
 Users can buy the music NFT to make it exclusive to pay the owner. 
 
-##Tech Used
+# Tech Used
 
 Solidity, Hardhat , Polygon, Alchemy, Ipfs
 
