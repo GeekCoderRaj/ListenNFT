@@ -20,3 +20,7 @@ Solidity, Hardhat , Polygon, Alchemy, Ipfs
 ![App Screenshot](./Screenshot/S3.jpeg)
 ![App Screenshot](./Screenshot/S4.jpeg)
 
+# Problem It Solved
+
+Artist don’t get the amount , importance and fame what they deserve. A huge amount is slashed by the big music firm like T-Series, Sony Music etc.
+
