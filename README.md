@@ -10,6 +10,9 @@ Users can buy the music NFT to make it exclusive to pay the owner.
 
 Solidity, Hardhat , Polygon, Alchemy, Ipfs
 
+# Flow For Mint
+![App Screenshot](./Screenshot/S5.jpeg)
+
 ## Screenshots
 
 ![App Screenshot](./Screenshot/S1.jpeg)
