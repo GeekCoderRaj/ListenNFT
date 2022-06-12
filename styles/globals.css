@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.navText{
+    background-color: black;
+    padding: 0.75rem;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px #3232e5;
+}
+
+.navText:hover{
+    transform: scale(1.2);
+}
