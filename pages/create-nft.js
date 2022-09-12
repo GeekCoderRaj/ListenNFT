@@ -1,11 +1,9 @@
 import { useState } from 'react'
 import { ethers } from 'ethers'
-import { create as ipfsHttpClient } from 'ipfs-http-client'
+import { uploadFileToIPFS, uploadJSONToIPFS } from "./pinata";
 import { useRouter } from 'next/router'
 import Web3Modal from 'web3modal'
 import Aud from "./Aud"
-
-const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 import {
   marketplaceAddress
@@ -20,35 +18,50 @@ export default function CreateItem() {
   const router = useRouter()
 
   async function onChangeImage(e) {
-    const file = e.target.files[0]
+    var file = e.target.files[0];
+    //check for file extension
     try {
-      const added = await client.add(
-        file,
-        {
-          progress: (prog) => console.log(`received: ${prog}`)
+        //upload the file to IPFS
+        const response = await uploadFileToIPFS(file);
+        if(response.success === true) {
+            console.log("Uploaded image to Pinata: ", response.pinataURL)
+            setFileUrl(response.pinataURL);
         }
-      )
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`
-      setFileUrl(url)
-    } catch (error) {
-      console.log('Error uploading file: ', error)
-    }  
+    }
+    catch(e) {
+        console.log("Error during file upload", e);
+    }
+    // const file = e.target.files[0]
+    // console.log(file)
+    // try {
+    //   const added = await client.add(
+    //     file,
+    //     {
+    //       progress: (prog) => console.log(`received: ${prog}`)
+    //     }
+    //   )
+    //   console.log(added)
+    //   const url = `https://infura-ipfs.io/ipfs/${added.path}`
+    //   console.log(url);
+    //   setFileUrl(url)
+    // } catch (error) {
+    //   console.log('Error uploading file: ', error)
+    // }  
   }
   async function onChangeAudio(e) {
-    const file = e.target.files[0]
+    var file = e.target.files[0];
+    //check for file extension
     try {
-      const added = await client.add(
-        file,
-        {
-          progress: (prog) => console.log(`received: ${prog}`)
+        //upload the file to IPFS
+        const response = await uploadFileToIPFS(file);
+        if(response.success === true) {
+            console.log("Uploaded image to Pinata: ", response.pinataURL)
+            setAudioUrl(response.pinataURL);
         }
-      )
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`
-      setAudioUrl(url)
-      console.log(url);
-    } catch (error) {
-      console.log('Error uploading file: ', error)
-    }  
+    }
+    catch(e) {
+        console.log("Error during file upload", e);
+    }
   }
   async function uploadToIPFS() {
     const { name, description, price } = formInput
@@ -57,13 +70,19 @@ export default function CreateItem() {
     const data = JSON.stringify({
       name, description, image: fileUrl, audio: AudioUrl
     })
-    try {
-      const added = await client.add(data)
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`
-      /* after file is uploaded to IPFS, return the URL to use it in the transaction */
-      console.log(data);
-      console.log(url);
-      return url
+      try {
+        //upload the metadata JSON to IPFS
+        const response = await uploadJSONToIPFS(data);
+        if(response.success === true){
+            console.log("Uploaded JSON to Pinata: ", response)
+            return response.pinataURL;
+        }
+      // const added = await client.add(data)
+      // const url = `https://infura-ipfs.io/ipfs/${added.path}`
+      // /* after file is uploaded to IPFS, return the URL to use it in the transaction */
+      // console.log(data);
+      // console.log(url);
+      // return url
     } catch (error) {
       console.log('Error uploading file: ', error)
     }  
